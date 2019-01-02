@@ -20,10 +20,18 @@
     <Button
         android:id="@+id/buttonStopGetLocation"
         app:layout_constraintLeft_toRightOf="@+id/buttonGetLocation"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/buttonShowOnMap"
         android:text="Stop Get Location"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        />
+    <Button
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/buttonStopGetLocation"
+            android:id="@+id/buttonShowOnMap"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Show On Map"
         />
     <ScrollView
         android:layout_width="wrap_content"

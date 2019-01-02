@@ -52,9 +52,19 @@ class MainActivity : AppCompatActivity(), LocationListener {
     buttonGetLocation.alpha = 1F
     buttonStopGetLocation.isEnabled = true
     buttonStopGetLocation.alpha = 1F
+    buttonShowOnMap.setOnClickListener { showMap() }
     buttonGetLocation.setOnClickListener { getLocation() }
     buttonStopGetLocation.setOnClickListener { stopGetLocation() }
     Toast.makeText(this, "Done", Toast.LENGTH_SHORT).show()
+  }
+
+  private fun showMap() {
+    if(mLocationGPS!= null) {
+      intent = Intent(this@MainActivity,MapsActivity::class.java)
+      intent.putExtra("LATITUDE",mLocationGPS!!.latitude)
+      intent.putExtra("LONGITUDE",mLocationGPS!!.longitude)
+          startActivity(intent)
+    }
   }
 
   private fun stopGetLocation() {
@@ -65,6 +75,9 @@ class MainActivity : AppCompatActivity(), LocationListener {
   private fun disableView() {
     buttonGetLocation.isEnabled = false
     buttonGetLocation.alpha = 0.5F
+    buttonStopGetLocation.isEnabled = false
+    buttonStopGetLocation.alpha = 0.5F
+
   }
 
   @SuppressLint("MissingPermission")

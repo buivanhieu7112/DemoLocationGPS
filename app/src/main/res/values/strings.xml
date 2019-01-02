@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">GPSLocationDemo</string>
+    <string name="title_activity_maps">Map from location GPS</string>
 </resources>
