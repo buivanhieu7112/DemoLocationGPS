@@ -1,8 +1,8 @@
 package com.example.framgiabuivanhieu.gpslocationdemo
 
-import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Switch
 
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -10,6 +10,7 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import kotlinx.android.synthetic.main.activity_maps.*
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
@@ -22,6 +23,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     val mapFragment = supportFragmentManager
         .findFragmentById(R.id.map) as SupportMapFragment
     mapFragment.getMapAsync(this)
+    initUI()
   }
 
   /**
@@ -34,12 +36,24 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
    * installed Google Play services and returned to the app.
    */
   override fun onMapReady(googleMap: GoogleMap) {
-    var latitude = intent.extras.get("LATITUDE") as Double
-    var longitude = intent.extras.get("LONGITUDE") as Double
+    var latitude = intent.extras!!.get("LATITUDE") as Double
+    var longitude = intent.extras!!.get("LONGITUDE") as Double
     mMap = googleMap
     // Add a marker in Sydney and move the camera
     val sydney = LatLng(latitude, longitude)
     mMap.addMarker(MarkerOptions().position(sydney).title("Location Current"))
     mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+  }
+
+  private fun initUI(){
+    buttonZoomIn.setOnClickListener { onZoom(R.id.buttonZoomIn) }
+    buttonZoomOut.setOnClickListener { onZoom(R.id.buttonZoomOut) }
+  }
+
+  private fun onZoom(view: Int) {
+   when(view){
+     R.id.buttonZoomOut->mMap.animateCamera(CameraUpdateFactory.zoomIn())
+     R.id.buttonZoomIn->mMap.animateCamera(CameraUpdateFactory.zoomOut())
+   }
   }
 }
