@@ -4,9 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.location.Location
-import android.location.LocationListener
-import android.location.LocationManager
+import android.location.*
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
@@ -23,6 +21,7 @@ class MainActivity : AppCompatActivity(), LocationListener {
   private var mHasNetWork = false
   private var mLocationGPS: Location? = null
   private var mLocationNetWork: Location? = null
+  private lateinit var mAddress: Address
 
 
   private var mPermissions = arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION,
@@ -59,11 +58,13 @@ class MainActivity : AppCompatActivity(), LocationListener {
   }
 
   private fun showMap() {
-    if(mLocationGPS!= null) {
-      intent = Intent(this@MainActivity,MapsActivity::class.java)
-      intent.putExtra("LATITUDE",mLocationGPS!!.latitude)
-      intent.putExtra("LONGITUDE",mLocationGPS!!.longitude)
-          startActivity(intent)
+    if (mLocationGPS != null) {
+      intent = Intent(this@MainActivity, MapsActivity::class.java)
+      intent.putExtra("LATITUDE", mLocationGPS!!.latitude)
+      intent.putExtra("LONGITUDE", mLocationGPS!!.longitude)
+      intent.putExtra("LOCATION",
+          mAddress.getAddressLine(0))
+      startActivity(intent)
     }
   }
 
@@ -134,6 +135,20 @@ class MainActivity : AppCompatActivity(), LocationListener {
         textViewResult.append("\nLongitude: " + mLocationGPS!!.longitude)
 
         textViewResult.append("\nTime: " + Calendar.getInstance().time)
+
+        val geocoder = Geocoder(this, Locale.getDefault())
+        val listAddress: MutableList<Address> = geocoder.getFromLocation(mLocationGPS!!.latitude,
+            mLocationGPS!!.longitude, 1)
+        mAddress = listAddress[0]
+        var add = mAddress.getAddressLine(0)
+        add = add + "\n" + mAddress.countryName
+        add = add + "\n" + mAddress.countryCode
+        add = add + "\n" + mAddress.adminArea
+        add = add + "\n" + mAddress.postalCode
+        add = add + "\n" + mAddress.subAdminArea
+        add = add + "\n" + mAddress.locality
+        add = add + "\n" + mAddress.subThoroughfare
+        Log.d("LOCATION", "Address: " + add.toString())
       }
     }
     if (mHasNetWork) {
@@ -156,7 +171,6 @@ class MainActivity : AppCompatActivity(), LocationListener {
 
   override fun onProviderDisabled(provider: String?) {
   }
-
 
   private fun checkPermission(mPermissions: Array<String>): Boolean {
     var allSuccess = true
@@ -188,7 +202,6 @@ class MainActivity : AppCompatActivity(), LocationListener {
       }
       if (allSuccess)
         enableView()
-
     }
   }
 

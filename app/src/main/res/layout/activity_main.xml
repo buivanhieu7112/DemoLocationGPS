@@ -19,19 +19,19 @@
         />
     <Button
         android:id="@+id/buttonStopGetLocation"
-        app:layout_constraintLeft_toRightOf="@+id/buttonGetLocation"
-        app:layout_constraintRight_toLeftOf="@id/buttonShowOnMap"
-        android:text="Stop Get Location"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="Stop Get Location"
+        app:layout_constraintLeft_toRightOf="@+id/buttonGetLocation"
+        app:layout_constraintRight_toLeftOf="@id/buttonShowOnMap"
         />
     <Button
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/buttonStopGetLocation"
-            android:id="@+id/buttonShowOnMap"
+        android:id="@+id/buttonShowOnMap"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Show On Map"
+        app:layout_constraintLeft_toRightOf="@id/buttonStopGetLocation"
+        app:layout_constraintRight_toRightOf="parent"
         />
     <ScrollView
         android:layout_width="wrap_content"
@@ -40,11 +40,11 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/buttonGetLocation"
         >
-    <TextView
-        android:id="@+id/textViewResult"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        />
+        <TextView
+            android:id="@+id/textViewResult"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
     </ScrollView>
 
 </android.support.constraint.ConstraintLayout>
